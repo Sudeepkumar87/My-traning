@@ -17,5 +17,25 @@ router.get('/test-you', function(req, res){
 router.get('/give-me-students-data',function(req, res){
 
 })
+router.get('/get-movies', function(req, res){
+    let movies1={"shole"." Rang de basanti", "dil mange more", " tirange"}
+    res.set(movies1)
+)}
+// second question
+router.get('/get-movie/:indexNumber','The shining', lord of the ring', 'hatman begins')
+let index = req.params.indexNumber;
+console.log(movies[index])
+res.send(movies[index])
 module.exports = router;
 // adding this comment for no reason
+//third question
+router.get('/get-moviess/;indexNumber',function(req, res)){
+    let moviesName=['rang de basanti', 'The shining', lord of the ring,'batman begins']
+    let index = req.params.indexNumber;
+    if(index> moviesNmame.length){
+        return res.send("use a valid index")
+    } else{
+        res.send(moviesName[index])
+    }
+    }
+}

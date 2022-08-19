@@ -1,5 +1,6 @@
 const { count } = require("console")
 const BookModel= require("../models/bookModel")
+const userModel = require("../models/userModel")
 
 const createBook= async function (req, res) {
     let data= req.body
@@ -41,6 +42,24 @@ const deleteBooks= async function (req, res) {
      
      res.send( { msg: allBooks})
 }
+ const createBooks= async function (req, res) {
+   let data= req.body
+   let savedData= await authorModel.create(data)
+   res.send({msg: savedData})
+}
+
+ const createlistBooks= async function (req,res){
+   let findAuthor = await userModel.find({author_name:"chetanBhagat"});
+   let findBook =await bookModel.find({author_id: {$eq : findAuthor[0].author_id}});
+   res.send({msg:findBook});
+ }
+ const updateBook = async function(req,res){
+    let bookprice = await BookModel.findOneAndUpdate({ name : "Two states"},{$set:{price : 100}}, {new: true});
+    let updateprice= bookprice.price;
+    let authorupdate= await userModel.find({author_id : {$eq : bookprice.author_id}}).select({author_name:1,_id:0});
+    res.send({authorupdate, updateprice});
+ }
+
 
 
 
@@ -57,3 +76,6 @@ module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
 module.exports.updateBooks= updateBooks
 module.exports.deleteBooks= deleteBooks
+module.exports.createBooks= createBooks
+module.exports.createlistBooks=createlistBooks
+module.exports.updateBook= updateBook

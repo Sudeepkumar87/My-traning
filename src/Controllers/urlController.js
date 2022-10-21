@@ -10,11 +10,11 @@ const { isValid, isValidReqBody } = require('../validation/validators')
 
 //==========================connect to redis===================================//
 const redisClient = redis.createClient(
-    15507, 
-    "redis-15507.c301.ap-south-1-1.ec2.cloud.redislabs.com", 
+    16559, 
+    "redis-16559.c239.us-east-1-2.ec2.cloud.redislabs.com", 
     { no_ready_check: true });
 
-    redisClient.auth("nPGIJgA4U0f9MG60Hw8IZnlIaCrVDRmf", function (err) {
+    redisClient.auth("Pu5KV1vCEPijZcqVgjPzO4xCkMrtB3Ro", function (err) {
     if (err) throw err;
 });
 
@@ -121,10 +121,10 @@ const getUrl = async function (req, res) {
         if (!shortId.isValid(urlCode)) {
             return res.status(400).send({ status: false, message: `Invalid urlCode: ${urlCode} provided` })
         }
-        // console.log(urlCode, req.params)
+         console.log(urlCode, req.params)
         //============================== if urlcode does not exist ======================================
         const cachedUrlCode = await GET_ASYNC(`${urlCode}`)
-        if (cachedUrlCode) {
+         if (cachedUrlCode) {
             const parseUrl = cachedUrlCode
             // const cachedLongUrl = parseUrl.longUrl
             return res.status(302).redirect(parseUrl)
@@ -137,7 +137,7 @@ const getUrl = async function (req, res) {
 
         //========================= redirecting to the longurl =======================================
         
-        await SETEX_ASYNC(`${urlCode}`,60*60,isData.longUrl)
+         await SETEX_ASYNC(`${urlCode}`,60*60,isData.longUrl)
         return res.status(302).redirect(isData.longUrl) //302 redirect status response
 
     } 
